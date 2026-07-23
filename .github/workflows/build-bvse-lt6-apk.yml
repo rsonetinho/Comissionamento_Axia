@@ -1,0 +1,95 @@
+name: Build BVSE-LT6 Sync APK
+
+on:
+  push:
+    branches:
+      - bvse-lt6-sync-v2
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore Android project and synchronization patch
+        run: |
+          base64 -d project.tar.gz.b64 > project.tar.gz
+          tar -xzf project.tar.gz
+          cat addonpatch.part00 addonpatch.part01 | base64 -d > addonpatch.tar.gz
+          tar -xzf addonpatch.tar.gz
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          index = Path('app/src/main/assets/index.html')
+          html = index.read_text(encoding='utf-8')
+          tag = '<script src="sync-addon.js"></script>'
+          if tag not in html:
+              pos = html.find('<script>')
+              if pos < 0:
+                  raise SystemExit('Inline script not found in index.html')
+              html = html[:pos] + tag + '\n  ' + html[pos:]
+              index.write_text(html, encoding='utf-8')
+
+          candidates = [Path('app/build.gradle'), Path('app/build.gradle.kts')]
+          build_file = next((p for p in candidates if p.exists()), None)
+          if not build_file:
+              raise SystemExit('Gradle application file not found')
+          text = build_file.read_text(encoding='utf-8')
+          text = re.sub(r'versionCode\s*(?:=\s*)?\d+', 'versionCode 2' if build_file.suffix == '.gradle' else 'versionCode = 2', text, count=1)
+          text = re.sub(r'versionName\s*(?:=\s*)?["\'][^"\']+["\']', 'versionName "1.1.0"' if build_file.suffix == '.gradle' else 'versionName = "1.1.0"', text, count=1)
+          build_file.write_text(text, encoding='utf-8')
+          PY
+          test -f app/src/main/assets/index.html
+          test -f app/src/main/assets/sync-addon.js
+          grep -q 'android.permission.INTERNET' app/src/main/AndroidManifest.xml
+          grep -q 'sync-addon.js' app/src/main/assets/index.html
+
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+
+      - name: Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android packages
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Build release APK
+        run: gradle --no-daemon :app:assembleRelease
+
+      - name: Align and inspect unsigned APK
+        run: |
+          "$ANDROID_HOME/build-tools/35.0.0/zipalign" -f -p 4 \
+            app/build/outputs/apk/release/app-release-unsigned.apk \
+            BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk
+          cp "$ANDROID_HOME/build-tools/35.0.0/lib/apksigner.jar" ./apksigner.jar
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk > build-info.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump permissions BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk >> build-info.txt
+          unzip -p BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk assets/index.html | grep -q 'sync-addon.js'
+          unzip -p BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk assets/sync-addon.js | grep -q 'Pré-cadastro'
+          sha256sum BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk >> build-info.txt
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: bvse-lt6-sync-build
+          path: |
+            BVSE_LT6_Torres_Sync_v1.1.0_aligned_unsigned.apk
+            apksigner.jar
+            build-info.txt
+          if-no-files-found: error
+          retention-days: 7
