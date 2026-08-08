@@ -1,238 +1,32 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Mova Urban</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7f7;color:#13201f}.top{background:#0f9d8a;color:#fff;padding:20px 18px 14px}.brand{font-size:27px;font-weight:800}.sub{opacity:.9;margin-top:3px}.tabs{display:flex;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:1001}.tabs button{flex:1;padding:13px 5px;border:0;background:#fff;font-weight:700;color:#52605f}.tabs button.active{color:#0f9d8a;border-bottom:3px solid #0f9d8a}.page{display:none;padding:14px;max-width:760px;margin:auto}.page.active{display:block}.card{background:#fff;border-radius:16px;padding:15px;margin-bottom:13px;box-shadow:0 2px 12px #00000010}.label{font-size:12px;color:#60706e;text-transform:uppercase;font-weight:700;margin-bottom:6px}input{width:100%;padding:13px;border:1px solid #ccd6d5;border-radius:10px;margin-bottom:10px;font-size:16px}.btn{width:100%;padding:14px;border:0;border-radius:12px;background:#0f9d8a;color:#fff;font-size:16px;font-weight:800}.btn.secondary{background:#243b39}.btn.light{background:#e9f5f2;color:#087262}.btn.red{background:#c94747}.price{font-size:34px;font-weight:900;color:#0f9d8a}.muted{color:#6c7978}.row{display:flex;gap:10px}.row>*{flex:1}.badge{display:inline-block;padding:7px 10px;border-radius:99px;background:#dcf4ef;color:#087262;font-weight:800}.badge.warn{background:#fff2d8;color:#8b5d00}.kpi{font-size:26px;font-weight:900}.driver-call{border:2px solid #0f9d8a}.money{font-size:28px;font-weight:900}.zero{color:#0f9d8a;font-weight:800}.footer{padding:18px;text-align:center;color:#71807f;font-size:12px}.mapWrap{position:relative;margin:-15px -15px 14px}.map{height:330px;border-radius:16px 16px 12px 12px;overflow:hidden;background:#dbe5e3}.mapStatus{position:absolute;left:10px;top:10px;z-index:900;background:#fff;padding:8px 10px;border-radius:10px;box-shadow:0 2px 8px #0002;font-size:12px;max-width:72%}.locBtn{position:absolute;right:10px;bottom:10px;z-index:900;border:0;border-radius:50%;width:46px;height:46px;background:#fff;box-shadow:0 2px 8px #0003;font-size:21px}.searchBox{position:relative}.suggestions{position:absolute;left:0;right:0;top:48px;background:#fff;border:1px solid #d4dddc;border-radius:10px;z-index:1100;max-height:220px;overflow:auto;box-shadow:0 8px 20px #0002;display:none}.suggestion{padding:11px 12px;border-bottom:1px solid #eef1f0;font-size:14px}.suggestion:last-child{border-bottom:0}.suggestion b{display:block;margin-bottom:2px}.nearby{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #edf1f0}.nearby:last-child{border-bottom:0}.driverDot{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;background:#0f9d8a;color:#fff;margin-right:8px}.routeInfo{display:none;padding:10px 0 0}.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.compareBox{border:1px solid #dce5e4;border-radius:12px;padding:12px}.compareBox.mova{border:2px solid #0f9d8a;background:#f2fbf9}.compareValue{font-size:22px;font-weight:900}.saving{padding:10px 12px;border-radius:12px;background:#dcf4ef;color:#087262;font-weight:800;margin:10px 0}.explain{font-size:12px;line-height:1.45;color:#60706e}.sectionTitle{font-size:18px;font-weight:800;margin:3px 0 12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.modeBar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:8px 0 12px}.modeBar button{padding:11px 8px;border:1px solid #cfe0dd;background:#fff;border-radius:10px;font-weight:700;color:#36514e}.modeBar button.active{background:#0f9d8a;color:#fff;border-color:#0f9d8a}.tripActions{display:flex;gap:10px;margin-top:12px}.tripActions>*{flex:1}.leaflet-control-attribution{font-size:9px!important}@media(max-width:520px){.map{height:300px}.row.mobileStack,.grid3{display:block}.row.mobileStack>*{margin-bottom:8px}.grid3>*{margin-bottom:8px}.compare{grid-template-columns:1fr}.modeBar{grid-template-columns:1fr}.tripActions{display:block}.tripActions>*{margin-top:8px}}
-</style>
-</head>
-<body>
-<div class="top"><div class="brand">Mova Urban</div><div class="sub">Mobilidade justa para quem vai e para quem dirige.</div></div>
-<div class="tabs"><button class="active" data-tab="pass">Passageiro</button><button data-tab="driver">Motorista</button><button data-tab="control">Control</button></div>
-
-<section id="pass" class="page active">
-  <div class="card">
-    <div class="mapWrap"><div id="map" class="map"></div><div id="mapStatus" class="mapStatus">Obtendo sua localização…</div><button id="locBtn" class="locBtn" aria-label="Centralizar no meu local">◎</button></div>
-    <div class="modeBar">
-      <button id="useGpsBtn">Usar minha localização</button>
-      <button id="pickOriginBtn">Definir origem no mapa</button>
-      <button id="pickDestBtn">Definir destino no mapa</button>
-    </div>
-    <div class="label">Origem</div>
-    <div class="searchBox"><input id="origem" autocomplete="off" placeholder="Minha localização ou digite um endereço"><div id="originSuggestions" class="suggestions"></div></div>
-    <div class="label">Destino</div>
-    <div class="searchBox"><input id="destino" autocomplete="off" placeholder="Digite rua, bairro, local ou escolha no mapa"><div id="suggestions" class="suggestions"></div></div>
-    <div id="routeInfo" class="routeInfo"><div class="row"><div><div class="label">Distância</div><b id="routeKm">--</b></div><div><div class="label">Tempo estimado</div><b id="routeMin">--</b></div><div><div class="label">Motoristas próximos</div><b id="nearCount">--</b></div></div></div>
-    <div class="row mobileStack" style="margin-top:12px"><div><div class="label">Distância (km)</div><input id="km" type="number" value="0" step="0.1" readonly></div><div><div class="label">Tempo (min)</div><input id="min" type="number" value="0" readonly></div></div>
-    <button id="calcBtn" class="btn">Calcular corrida</button>
-  </div>
-
-  <div class="card"><div class="label">Motoristas por perto</div><div id="nearbyList" class="muted">Localizando motoristas próximos…</div></div>
-
-  <div class="card" id="quote" style="display:none">
-    <div class="muted">Estimativa inteligente</div><div class="price" id="preco">R$ 0,00</div><div class="muted" id="detalhe"></div>
-    <div class="compare"><div class="compareBox"><div class="label">Referência de mercado</div><div class="compareValue" id="marketPrice">R$ 0,00</div><div class="muted">benchmark configurado</div></div><div class="compareBox mova"><div class="label">Mova Urban</div><div class="compareValue" id="movaPrice">R$ 0,00</div><div class="muted">0% comissão Mova</div></div></div>
-    <div class="saving" id="saving">Economia estimada: --</div>
-    <div id="priceRule" class="explain"></div><br><button id="requestBtn" class="btn">Solicitar Mova</button>
-  </div>
-
-  <div class="card" id="passStatus" style="display:none">
-    <span class="badge" id="tripBadge">Motorista encontrado</span>
-    <h3>João • Chevrolet Onix</h3><div>Placa: ABC1D23</div>
-    <p class="muted">Use o PIN <b id="pin">----</b> para iniciar a viagem.</p>
-    <div class="tripActions"><button id="cancelTripBtn" class="btn red">Cancelar corrida</button></div>
-  </div>
-</section>
-
-<section id="driver" class="page">
-  <div class="card"><div class="row"><div><div class="label">Status</div><span class="badge" id="onlineBadge">OFFLINE</span></div><div><div class="label">Plano</div><b>MOVA 30</b><div class="muted">R$ 250/mês</div></div></div><br><button class="btn secondary" id="onlineBtn">Ficar online</button></div>
-  <div id="call" class="card driver-call" style="display:none"><div class="label">Nova corrida</div><h3 id="callRoute">Origem → Destino</h3><div class="money" id="callPrice">R$ 0,00</div><p>Comissão Mova: <span class="zero">R$ 0,00</span><br>Você recebe: <b id="driverReceive">R$ 0,00</b></p><div class="row"><button class="btn red" id="declineBtn">Recusar</button><button class="btn" id="acceptBtn">Aceitar</button></div></div>
-  <div class="card"><div class="label">Hoje</div><div class="kpi" id="ganhos">R$ 0,00</div><div class="muted"><span id="corridas">0</span> corridas concluídas</div></div>
-</section>
-
-<section id="control" class="page">
-  <div class="row"><div class="card"><div class="label">Motoristas</div><div class="kpi">100</div></div><div class="card"><div class="label">Receita passes</div><div class="kpi">R$ 25 mil</div></div></div>
-  <div class="row"><div class="card"><div class="label">Corridas MVP</div><div class="kpi" id="ctrlTrips">0</div></div><div class="card"><div class="label">Comissão</div><div class="kpi zero">0%</div></div></div>
-  <div class="card"><div class="sectionTitle">Mova Smart Price</div><div class="explain">O preço procura ficar abaixo da referência de mercado, mas nunca abaixo do piso de proteção do motorista.</div><br>
-    <div class="label">Tarifa operacional Mova</div><div class="grid3"><div><div class="label">Base</div><input id="base" type="number" step="0.1"></div><div><div class="label">R$/km</div><input id="pkm" type="number" step="0.1"></div><div><div class="label">R$/min</div><input id="pmin" type="number" step="0.05"></div></div>
-    <div class="grid3"><div><div class="label">Tarifa mínima</div><input id="minFare" type="number" step="0.5"></div><div><div class="label">Desconto-alvo (%)</div><input id="discountTarget" type="number" step="1"></div><div><div class="label">Desconto máximo (%)</div><input id="discountMax" type="number" step="1"></div></div>
-    <div class="label">Benchmark de mercado</div><div class="grid3"><div><div class="label">Base ref.</div><input id="refBase" type="number" step="0.1"></div><div><div class="label">R$/km ref.</div><input id="refKm" type="number" step="0.1"></div><div><div class="label">R$/min ref.</div><input id="refMin" type="number" step="0.05"></div></div>
-    <div class="label">Piso de proteção do motorista</div><div class="grid3"><div><div class="label">Base piso</div><input id="floorBase" type="number" step="0.1"></div><div><div class="label">R$/km piso</div><input id="floorKm" type="number" step="0.1"></div><div><div class="label">R$/min piso</div><input id="floorMin" type="number" step="0.05"></div></div>
-    <button class="btn" id="saveTarifaBtn">Salvar Smart Price</button>
-  </div>
-</section>
-
-<div class="footer">Mova Urban • origem/destino pelo mapa + Smart Price + GPS nativo</div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-const $=id=>document.getElementById(id);
-const defaults={base:2.5,pkm:1.5,pmin:.2,minFare:8,discountTarget:10,discountMax:15,refBase:7.75,refKm:1.25,refMin:.25,floorBase:4.5,floorKm:1.05,floorMin:.12};
-let tarifa={...defaults,...JSON.parse(localStorage.getItem('tarifaSmart')||'{}')};
-let valor=0,marketRef=0,online=false,trips=+localStorage.getItem('trips')||0,earn=+localStorage.getItem('earn')||0;
-let map,userMarker,originMarker,destMarker,routeLayer,gpsPos=null,originPos=null,destPos=null,driverMarkers=[],searchTimer=null,originSearchTimer=null,driverTimer=null,nativeReceived=false,pickMode=null,tripActive=false;
-function fmt(v){return Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
-function setTab(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');b.classList.add('active');if(id==='pass'&&map)setTimeout(()=>map.invalidateSize(),80)}
-document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab,b)));
-
-function initMap(){
-  if(typeof L==='undefined'){$('mapStatus').textContent='Mapa indisponível sem internet';return}
-  map=L.map('map',{zoomControl:false}).setView([2.8235,-60.6758],13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
-  L.control.zoom({position:'bottomleft'}).addTo(map);
-  map.on('click',onMapClick);
-  $('mapStatus').textContent='Aguardando GPS do aparelho…';
-  startBrowserFallback();
-}
-function applyLocation(lat,lng,accuracy,source){
-  if(!isFinite(lat)||!isFinite(lng))return;
-  nativeReceived=source==='Android';gpsPos=[+lat,+lng];
-  $('mapStatus').textContent=(source==='Android'?'GPS Android':'Localização')+' • precisão ~'+Math.round(accuracy||0)+' m';
-  if(map){
-    if(!userMarker){userMarker=L.circleMarker(gpsPos,{radius:9,color:'#fff',weight:3,fillColor:'#0f9d8a',fillOpacity:1}).addTo(map).bindPopup('Sua localização atual');map.setView(gpsPos,16);spawnDrivers()}
-    else userMarker.setLatLng(gpsPos);
-    if(!originPos || $('origem').dataset.mode==='gps') setOriginGps(false);
-    updateDriverDistances();
-  }
-}
-window.movaNativeLocation=function(lat,lng,accuracy){applyLocation(Number(lat),Number(lng),Number(accuracy),'Android')};
-window.movaLocationError=function(msg){$('mapStatus').textContent=msg||'Não foi possível obter o GPS'};
-function startBrowserFallback(){
-  setTimeout(()=>{if(nativeReceived)return;if(!navigator.geolocation){$('mapStatus').textContent='Aguardando GPS Android…';return}
-  navigator.geolocation.watchPosition(p=>{if(!nativeReceived)applyLocation(p.coords.latitude,p.coords.longitude,p.coords.accuracy,'Web')},()=>{}, {enableHighAccuracy:true,maximumAge:5000,timeout:15000})},1800)
-}
-$('locBtn').addEventListener('click',()=>{if(gpsPos)map.flyTo(gpsPos,16)});
-$('useGpsBtn').addEventListener('click',()=>setOriginGps(true));
-function setOriginGps(center){
-  if(!gpsPos){$('mapStatus').textContent='Aguardando sua localização atual…';return}
-  originPos=[...gpsPos];$('origem').value='Minha localização atual';$('origem').dataset.mode='gps';
-  if(originMarker){map.removeLayer(originMarker);originMarker=null}
-  if(center&&map)map.flyTo(originPos,16);
-  if(destPos)routeToDestination();
-}
-function setPickMode(mode){
-  pickMode=mode;
-  $('pickOriginBtn').classList.toggle('active',mode==='origin');
-  $('pickDestBtn').classList.toggle('active',mode==='dest');
-  $('mapStatus').textContent=mode==='origin'?'Toque no mapa para definir a ORIGEM':mode==='dest'?'Toque no mapa para definir o DESTINO':'Seleção de ponto cancelada';
-}
-$('pickOriginBtn').addEventListener('click',()=>setPickMode(pickMode==='origin'?null:'origin'));
-$('pickDestBtn').addEventListener('click',()=>setPickMode(pickMode==='dest'?null:'dest'));
-async function onMapClick(e){
-  if(!pickMode)return;
-  const p=[e.latlng.lat,e.latlng.lng],mode=pickMode;setPickMode(null);
-  if(mode==='origin') await setOriginPoint(p);
-  else await setDestinationPoint(p);
-}
-async function reverseGeocode(p,fallback){
-  try{
-    let r=await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+p[0]+'&lon='+p[1]+'&zoom=18&addressdetails=1',{headers:{'Accept-Language':'pt-BR'}});
-    let d=await r.json();return d.display_name||fallback;
-  }catch(e){return fallback}
-}
-async function setOriginPoint(p,label){
-  originPos=[...p];$('origem').dataset.mode='manual';
-  if(originMarker)map.removeLayer(originMarker);
-  originMarker=L.marker(originPos,{draggable:true}).addTo(map).bindPopup('Origem').openPopup();
-  originMarker.on('dragend',async()=>{let q=originMarker.getLatLng();originPos=[q.lat,q.lng];$('origem').value=await reverseGeocode(originPos,'Origem selecionada no mapa');if(destPos)routeToDestination()});
-  $('origem').value=label||await reverseGeocode(originPos,'Origem selecionada no mapa');
-  if(destPos)routeToDestination();
-}
-async function setDestinationPoint(p,label){
-  destPos=[...p];
-  if(destMarker)map.removeLayer(destMarker);
-  destMarker=L.marker(destPos,{draggable:true}).addTo(map).bindPopup('Destino').openPopup();
-  destMarker.on('dragend',async()=>{let q=destMarker.getLatLng();destPos=[q.lat,q.lng];$('destino').value=await reverseGeocode(destPos,'Destino selecionado no mapa');if(originPos)routeToDestination()});
-  $('destino').value=label||await reverseGeocode(destPos,'Destino selecionado no mapa');
-  if(originPos)routeToDestination();else map.flyTo(destPos,16);
-}
-
-function spawnDrivers(){
-  if(!gpsPos||!map)return;
-  driverMarkers.forEach(x=>map.removeLayer(x.marker));driverMarkers=[];
-  const names=['Carlos • Onix','Ana • HB20','Rafael • Argo','Marcos • Polo','Luana • Cronos'];
-  for(let i=0;i<5;i++){
-    let a=Math.random()*Math.PI*2,d=.003+Math.random()*.012,lat=gpsPos[0]+Math.cos(a)*d,lng=gpsPos[1]+Math.sin(a)*d;
-    let icon=L.divIcon({className:'',html:'<div style="width:30px;height:30px;border-radius:50%;background:#263a38;color:white;display:flex;align-items:center;justify-content:center;border:2px solid white;box-shadow:0 2px 6px #0005">🚗</div>',iconSize:[30,30],iconAnchor:[15,15]});
-    let marker=L.marker([lat,lng],{icon}).addTo(map).bindPopup(names[i]);driverMarkers.push({name:names[i],marker})
-  }
-  updateDriverDistances();if(driverTimer)clearInterval(driverTimer);driverTimer=setInterval(moveDrivers,5000)
-}
-function hav(a,b){const R=6371,dLat=(b[0]-a[0])*Math.PI/180,dLon=(b[1]-a[1])*Math.PI/180,x=Math.sin(dLat/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
-function updateDriverDistances(){
-  const center=originPos||gpsPos;if(!center)return;
-  let arr=driverMarkers.map(d=>({d,km:hav(center,[d.marker.getLatLng().lat,d.marker.getLatLng().lng])})).sort((a,b)=>a.km-b.km);
-  $('nearCount').textContent=arr.length||'--';
-  $('nearbyList').innerHTML=arr.length?arr.map(x=>'<div class="nearby"><div><span class="driverDot">🚗</span><b>'+x.d.name+'</b></div><div style="text-align:right"><b>'+(x.km<1?Math.round(x.km*1000)+' m':x.km.toFixed(1)+' km')+'</b><div class="muted">~'+Math.max(2,Math.round(x.km*3+2))+' min</div></div></div>').join(''):'Nenhum motorista simulado próximo.';
-}
-function moveDrivers(){driverMarkers.forEach(d=>{let p=d.marker.getLatLng();d.marker.setLatLng([p.lat+(Math.random()-.5)*.0008,p.lng+(Math.random()-.5)*.0008])});updateDriverDistances()}
-
-$('destino').addEventListener('input',()=>{clearTimeout(searchTimer);let q=$('destino').value.trim();if(q.length<3){$('suggestions').style.display='none';return}searchTimer=setTimeout(()=>searchAddress(q,'dest'),350)});
-$('origem').addEventListener('input',()=>{clearTimeout(originSearchTimer);let q=$('origem').value.trim();$('origem').dataset.mode='manual';if(q.length<3){$('originSuggestions').style.display='none';return}originSearchTimer=setTimeout(()=>searchAddress(q,'origin'),350)});
-async function searchAddress(q,type){
-  let box=type==='origin'?$('originSuggestions'):$('suggestions');box.style.display='block';box.innerHTML='<div class="suggestion muted">Buscando endereço…</div>';
-  try{
-    let r=await fetch('https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&countrycodes=br&q='+encodeURIComponent(q),{headers:{'Accept-Language':'pt-BR'}}),data=await r.json();
-    if(!data.length){box.innerHTML='<div class="suggestion muted">Nenhum endereço encontrado.</div>';return}
-    box.innerHTML=data.map((x,i)=>'<div class="suggestion" data-i="'+i+'"><b>'+(x.name||x.display_name.split(',')[0])+'</b><span class="muted">'+x.display_name+'</span></div>').join('');
-    box.querySelectorAll('.suggestion[data-i]').forEach(el=>el.addEventListener('click',()=>{let x=data[+el.dataset.i];box.style.display='none';type==='origin'?setOriginPoint([+x.lat,+x.lon],x.display_name):setDestinationPoint([+x.lat,+x.lon],x.display_name)}))
-  }catch(e){box.innerHTML='<div class="suggestion muted">Sem conexão para buscar endereços.</div>'}
-}
-async function routeToDestination(){
-  if(!originPos||!destPos)return;
-  try{
-    let u='https://router.project-osrm.org/route/v1/driving/'+originPos[1]+','+originPos[0]+';'+destPos[1]+','+destPos[0]+'?overview=full&geometries=geojson';
-    let r=await fetch(u),d=await r.json();if(!d.routes||!d.routes.length)throw new Error('rota');
-    let rt=d.routes[0],km=rt.distance/1000,min=Math.ceil(rt.duration/60);
-    $('km').value=km.toFixed(1);$('min').value=min;$('routeKm').textContent=km.toFixed(1)+' km';$('routeMin').textContent=min+' min';$('routeInfo').style.display='block';
-    if(routeLayer)map.removeLayer(routeLayer);routeLayer=L.geoJSON(rt.geometry,{style:{weight:5,opacity:.8}}).addTo(map);
-    map.fitBounds(routeLayer.getBounds(),{padding:[30,30]});calcular();
-  }catch(e){$('mapStatus').textContent='Não foi possível calcular a rota agora.'}
-}
-function smartPrice(km,min){
-  const operational=Math.max(tarifa.minFare,tarifa.base+km*tarifa.pkm+min*tarifa.pmin);
-  marketRef=Math.max(tarifa.minFare,tarifa.refBase+km*tarifa.refKm+min*tarifa.refMin);
-  const target=marketRef*(1-tarifa.discountTarget/100),maxDiscountFloor=marketRef*(1-tarifa.discountMax/100);
-  const driverFloor=Math.max(tarifa.minFare,tarifa.floorBase+km*tarifa.floorKm+min*tarifa.floorMin);
-  valor=Math.max(target,maxDiscountFloor,driverFloor,operational);
-  return {operational,target,maxDiscountFloor,driverFloor}
-}
-function calcular(){
-  let km=+$('km').value||0,min=+$('min').value||0;if(km<=0&&min<=0){alert('Defina origem e destino para calcular a rota.');return}
-  let parts=smartPrice(km,min),save=Math.max(0,marketRef-valor),pct=marketRef?save/marketRef*100:0;
-  $('preco').textContent=fmt(valor);$('movaPrice').textContent=fmt(valor);$('marketPrice').textContent=fmt(marketRef);$('detalhe').textContent=km.toFixed(1)+' km • '+min+' min';
-  $('saving').textContent='Economia estimada: '+fmt(save)+' • '+pct.toFixed(1)+'%';
-  $('priceRule').textContent='Preço protegido por tarifa mínima e piso do motorista. Tarifa operacional: '+fmt(parts.operational)+' • piso do motorista: '+fmt(parts.driverFloor)+'.';
-  $('quote').style.display='block'
-}
-$('calcBtn').addEventListener('click',calcular);
-$('requestBtn').addEventListener('click',()=>{
-  if(!originPos||!destPos){alert('Informe origem e destino antes de solicitar.');return}
-  let p=Math.floor(1000+Math.random()*9000);$('pin').textContent=p;tripActive=true;$('passStatus').style.display='block';$('tripBadge').textContent='Motorista encontrado';
-  $('call').style.display='block';$('callRoute').textContent=($('origem').value||'Origem')+' → '+($('destino').value||'Destino');$('callPrice').textContent=fmt(valor);$('driverReceive').textContent=fmt(valor);
-});
-$('cancelTripBtn').addEventListener('click',()=>{
-  if(!tripActive)return;
-  if(!confirm('Cancelar esta corrida?'))return;
-  tripActive=false;$('passStatus').style.display='none';$('call').style.display='none';alert('Corrida cancelada. Nenhuma cobrança foi aplicada nesta simulação.')
-});
-$('onlineBtn').addEventListener('click',()=>{online=!online;$('onlineBadge').textContent=online?'ONLINE':'OFFLINE';$('onlineBtn').textContent=online?'Ficar offline':'Ficar online'});
-$('declineBtn').addEventListener('click',()=>{$('call').style.display='none'});
-$('acceptBtn').addEventListener('click',()=>{
-  if(!online){online=true;$('onlineBadge').textContent='ONLINE';$('onlineBtn').textContent='Ficar offline'}
-  if(confirm('Motorista aceitou. Finalizar corrida de teste agora?')){trips++;earn+=valor;localStorage.setItem('trips',trips);localStorage.setItem('earn',earn);tripActive=false;$('call').style.display='none';$('passStatus').style.display='none';refresh();alert('Corrida concluída. Comissão Mova: R$ 0,00.')}
-});
-$('saveTarifaBtn').addEventListener('click',()=>{
-  ['base','pkm','pmin','minFare','discountTarget','discountMax','refBase','refKm','refMin','floorBase','floorKm','floorMin'].forEach(k=>tarifa[k]=+$(k).value);
-  if(tarifa.discountMax<tarifa.discountTarget)tarifa.discountMax=tarifa.discountTarget;
-  localStorage.setItem('tarifaSmart',JSON.stringify(tarifa));refresh();alert('Mova Smart Price salvo.')
-});
-function refresh(){
-  $('ganhos').textContent=fmt(earn);$('corridas').textContent=trips;$('ctrlTrips').textContent=trips;
-  Object.keys(defaults).forEach(k=>{if($(k))$(k).value=tarifa[k]});
-}
-refresh();initMap();
-</script>
-</body></html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Mova Urban</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
+:root{--p:#087f70;--p2:#0ea58f;--ink:#172522;--muted:#71807c;--bg:#f5f7f6;--card:#fff;--line:#e5ece9;--danger:#c74444;--soft:#e9f7f3;--shadow:0 8px 28px #10251f0d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding-bottom:76px}.shell{max-width:780px;margin:auto}.hero{padding:20px 18px 14px;background:linear-gradient(145deg,#075f55,#0d9a85);color:#fff}.brand{font-size:26px;font-weight:900;letter-spacing:-.7px}.tag{font-size:13px;opacity:.86;margin-top:2px}.page{display:none;padding:14px}.page.active{display:block}.card{background:var(--card);border:1px solid #edf2f0;border-radius:20px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}.mapWrap{position:relative;margin:-15px -15px 14px}.map{height:315px;border-radius:20px 20px 14px 14px;background:#dce7e3;overflow:hidden}.mapStatus{position:absolute;z-index:900;top:10px;left:10px;max-width:70%;background:#fffffff2;border:1px solid #fff;padding:8px 10px;border-radius:12px;font-size:11px;box-shadow:0 3px 12px #0002}.floatBtn{position:absolute;z-index:900;right:11px;bottom:11px;width:44px;height:44px;border:0;border-radius:50%;background:#fff;box-shadow:0 4px 14px #0003;font-size:20px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;margin:4px 0 6px}.field{display:flex;align-items:center;border:1px solid var(--line);background:#fbfcfc;border-radius:13px;margin-bottom:10px;overflow:visible;position:relative}.field input,.field select,.field textarea{width:100%;border:0;outline:0;background:transparent;padding:13px;font:inherit;color:var(--ink)}.field textarea{min-height:86px;resize:vertical}.field .clear{border:0;background:transparent;color:#889693;font-size:18px;padding:0 12px}.suggest{display:none;position:absolute;top:50px;left:0;right:0;z-index:1200;background:#fff;border:1px solid var(--line);border-radius:13px;max-height:220px;overflow:auto;box-shadow:0 12px 28px #0002}.sug{padding:11px 12px;border-bottom:1px solid #eff3f2;font-size:13px}.sug:last-child{border-bottom:0}.sug b{display:block}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 13px}.qbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 7px;font-weight:750;color:#35514b}.qbtn.on{background:var(--p);color:#fff;border-color:var(--p)}.services{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:6px 0 13px}.svc{border:1px solid var(--line);background:#fff;border-radius:16px;padding:13px 8px;text-align:center}.svc.on{border:2px solid var(--p2);background:var(--soft)}.svc .ico{font-size:25px}.svc b{display:block;font-size:13px;margin-top:4px}.svc small{color:var(--muted);font-size:10px}.btn{width:100%;border:0;border-radius:14px;padding:14px 16px;font-weight:850;font-size:15px;background:var(--p);color:#fff}.btn.dark{background:#213430}.btn.light{background:var(--soft);color:var(--p)}.btn.red{background:var(--danger)}.btn:disabled{opacity:.45}.row{display:flex;gap:9px}.row>*{flex:1}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}.stat{background:#f8faf9;border-radius:12px;padding:10px}.stat b{display:block;font-size:15px}.stat small{color:var(--muted)}.price{font-size:36px;font-weight:950;letter-spacing:-1px;color:var(--p)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}.box{border:1px solid var(--line);border-radius:14px;padding:11px}.box.mova{border:2px solid var(--p2);background:#f4fbf9}.save{background:var(--soft);color:#05695c;border-radius:12px;padding:10px;font-weight:850;margin:9px 0}.badge{display:inline-block;background:var(--soft);color:var(--p);border-radius:99px;padding:7px 10px;font-size:12px;font-weight:850}.muted{color:var(--muted);font-size:13px}.sectionTitle{font-size:18px;font-weight:900;margin:0 0 10px}.driver{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #eff3f2}.driver:last-child{border:0}.money{font-size:27px;font-weight:950}.kpi{font-size:27px;font-weight:950}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.note{font-size:12px;line-height:1.45;color:var(--muted)}.nav{position:fixed;z-index:2000;bottom:0;left:0;right:0;background:#fffffffa;border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}.navin{display:flex;width:min(780px,100%)}.nav button{flex:1;border:0;background:transparent;padding:9px 3px 8px;color:#76837f;font-size:10px}.nav button span{display:block;font-size:20px;line-height:22px}.nav button.on{color:var(--p);font-weight:850}.leaflet-control-attribution{font-size:8px!important}@media(max-width:520px){.map{height:290px}.quick{grid-template-columns:1fr}.services{grid-template-columns:repeat(3,1fr)}.grid3{grid-template-columns:1fr}.row.mobile{display:block}.row.mobile>*{margin-bottom:8px}}
+</style></head><body><div class="shell"><header class="hero"><div class="brand">Mova Urban</div><div class="tag">Mobilidade simples, justa e inteligente.</div></header>
+<section id="pass" class="page active"><div class="card"><div class="mapWrap"><div id="map" class="map"></div><div id="mapStatus" class="mapStatus">Obtendo sua localização…</div><button id="locBtn" class="floatBtn">◎</button></div><div class="label">Como você quer ir?</div><div class="services"><button class="svc on" data-service="car"><div class="ico">🚗</div><b>Carro</b><small>Conforto urbano</small></button><button class="svc" data-service="moto"><div class="ico">🏍️</div><b>Moto</b><small>Mais econômico</small></button><button class="svc" data-service="parcel"><div class="ico">📦</div><b>Encomenda</b><small>Entrega rápida</small></button></div><div class="quick"><button id="useGpsBtn" class="qbtn">◎ Usar meu local</button><button id="pickOriginBtn" class="qbtn">📍 Origem no mapa</button><button id="pickDestBtn" class="qbtn">🏁 Destino no mapa</button></div><div class="label">Origem</div><div class="field"><input id="origem" autocomplete="off" placeholder="Sua localização ou digite o endereço"><button id="clearOrigin" class="clear">×</button><div id="originSuggestions" class="suggest"></div></div><div class="label">Destino</div><div class="field"><input id="destino" autocomplete="off" placeholder="Para onde você vai?"><button id="clearDest" class="clear">×</button><div id="destSuggestions" class="suggest"></div></div><div id="parcelFields" style="display:none"><div class="label">O que será enviado?</div><div class="field"><input id="parcelDesc" placeholder="Ex.: documentos, pequena caixa"></div></div><div id="routeStats" class="stats" style="display:none"><div class="stat"><small>Distância</small><b id="kmText">--</b></div><div class="stat"><small>Tempo</small><b id="minText">--</b></div><div class="stat"><small>Próximos</small><b id="nearCount">--</b></div></div><button id="calcBtn" class="btn">Calcular valor</button></div><div class="card"><div class="sectionTitle">Disponíveis perto de você</div><div id="nearbyList" class="muted">Buscando motoristas…</div></div><div id="quote" class="card" style="display:none"><div class="label">Estimativa Mova</div><div id="price" class="price">R$ 0,00</div><div id="tripDetail" class="muted"></div><div class="compare"><div class="box"><div class="label">Referência mercado</div><b id="marketPrice">R$ 0,00</b></div><div class="box mova"><div class="label">Mova Urban</div><b id="movaPrice">R$ 0,00</b></div></div><div id="saving" class="save">Economia estimada: --</div><button id="requestBtn" class="btn">Solicitar Mova</button></div><div id="tripCard" class="card" style="display:none"><span id="tripBadge" class="badge">Solicitação enviada</span><h3 id="assignedTitle">Carlos • Chevrolet Onix</h3><div id="assignedSub" class="muted">Placa ABC1D23</div><p class="muted">PIN da viagem: <b id="pin">----</b></p><button id="cancelTripBtn" class="btn red">Cancelar solicitação</button></div></section>
+<section id="driver" class="page"><div class="card"><div class="row"><div><div class="label">Status</div><span id="onlineBadge" class="badge">OFFLINE</span></div><div><div class="label">Passe atual</div><b>MOVA 30</b><div class="muted">R$ 250/mês</div></div></div><br><button id="onlineBtn" class="btn dark">Ficar online</button></div><div id="call" class="card" style="display:none"><div class="label">Nova solicitação</div><h3 id="callRoute">Origem → Destino</h3><div id="callPrice" class="money">R$ 0,00</div><p class="muted">Comissão Mova: <b style="color:var(--p)">R$ 0,00</b><br>Você recebe: <b id="driverReceive">R$ 0,00</b></p><div class="row"><button id="declineBtn" class="btn red">Recusar</button><button id="acceptBtn" class="btn">Aceitar</button></div></div><div class="card"><div class="sectionTitle">Resumo de hoje</div><div id="earn" class="kpi">R$ 0,00</div><div class="muted"><span id="trips">0</span> serviços concluídos</div></div></section>
+<section id="cargo" class="page"><div class="card"><div class="sectionTitle">Mova Cargas</div><p class="muted">Fretes urbanos e rodoviários com veículos de carga. Aqui o valor é cotado conforme veículo, peso, distância e operação de carga/descarga.</p><div class="label">Origem da carga</div><div class="field"><input id="cargoOrigin" placeholder="Endereço de coleta"></div><div class="label">Destino da carga</div><div class="field"><input id="cargoDest" placeholder="Endereço de entrega"></div><div class="grid2"><div><div class="label">Tipo de veículo</div><div class="field"><select id="truckType"><option>VUC / utilitário</option><option>Caminhão 3/4</option><option>Toco</option><option>Truck</option><option>Carreta</option></select></div></div><div><div class="label">Peso aproximado</div><div class="field"><input id="cargoWeight" type="number" min="0" step="0.1" placeholder="kg"></div></div></div><div class="label">Descrição da carga</div><div class="field"><textarea id="cargoDesc" placeholder="Ex.: móveis, material de construção, mercadoria paletizada..."></textarea></div><div class="grid2"><label class="field" style="padding:10px"><input id="needHelper" type="checkbox" style="width:auto;margin-right:8px"> Precisa ajudante</label><label class="field" style="padding:10px"><input id="scheduled" type="checkbox" style="width:auto;margin-right:8px"> Agendar frete</label></div><button id="cargoQuoteBtn" class="btn">Solicitar cotação de frete</button></div><div id="cargoResult" class="card" style="display:none"><span class="badge">Cotação registrada</span><h3 id="cargoResultTitle">Frete solicitado</h3><p class="muted">O Mova Cargas buscará transportadores compatíveis. Na operação real, o valor poderá ser aceito ou contraproposto pelo transportador.</p><button id="cancelCargo" class="btn red">Cancelar cotação</button></div></section>
+<section id="control" class="page"><div class="grid2"><div class="card"><div class="label">Motoristas</div><div class="kpi">100</div></div><div class="card"><div class="label">Receita passes</div><div class="kpi">R$ 25 mil</div></div></div><div class="card"><div class="sectionTitle">Mova Smart Price</div><p class="note">Parâmetros base. Moto e encomenda aplicam fatores próprios sobre a tarifa urbana, preservando o piso de remuneração.</p><div class="grid3"><div><div class="label">Base</div><div class="field"><input id="base" type="number" step=".1"></div></div><div><div class="label">R$/km</div><div class="field"><input id="pkm" type="number" step=".1"></div></div><div><div class="label">R$/min</div><div class="field"><input id="pmin" type="number" step=".05"></div></div></div><div class="grid3"><div><div class="label">Tarifa mínima</div><div class="field"><input id="minFare" type="number" step=".5"></div></div><div><div class="label">Desconto alvo %</div><div class="field"><input id="discountTarget" type="number"></div></div><div><div class="label">Desconto máx. %</div><div class="field"><input id="discountMax" type="number"></div></div></div><button id="saveTarifaBtn" class="btn">Salvar parâmetros</button></div></section></div>
+<nav class="nav"><div class="navin"><button class="on" data-tab="pass"><span>⌂</span>Viajar</button><button data-tab="driver"><span>◉</span>Motorista</button><button data-tab="cargo"><span>▣</span>Cargas</button><button data-tab="control"><span>⚙</span>Control</button></div></nav>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+const $=id=>document.getElementById(id),fmt=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});const defaults={base:2.5,pkm:1.5,pmin:.2,minFare:8,discountTarget:10,discountMax:15,refBase:7.75,refKm:1.25,refMin:.25,floorBase:4.5,floorKm:1.05,floorMin:.12};let fare={...defaults,...JSON.parse(localStorage.getItem('movaFare')||'{}')};let service='car',map,gpsPos,originPos,destPos,userMarker,originMarker,destMarker,routeLayer,pickMode=null,nativeReceived=false,drivers=[],driverTimer,price=0,market=0,tripActive=false,online=false,trips=+(localStorage.getItem('movaTrips')||0),earn=+(localStorage.getItem('movaEarn')||0);
+function tab(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('on'));$(id).classList.add('active');b.classList.add('on');if(id==='pass'&&map)setTimeout(()=>map.invalidateSize(),100)}document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab,b));
+function initMap(){if(typeof L==='undefined'){$('mapStatus').textContent='Mapa requer internet';return}map=L.map('map',{zoomControl:false}).setView([2.8235,-60.6758],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);L.control.zoom({position:'bottomleft'}).addTo(map);map.on('click',e=>{if(pickMode==='origin')setOrigin([e.latlng.lat,e.latlng.lng],'Ponto escolhido no mapa');if(pickMode==='dest')setDest([e.latlng.lat,e.latlng.lng],'Ponto escolhido no mapa');pickMode=null;document.querySelectorAll('.qbtn').forEach(x=>x.classList.remove('on'))});$('mapStatus').textContent='Aguardando GPS…';browserGps()}
+function applyLocation(lat,lng,acc,src){if(!isFinite(lat)||!isFinite(lng))return;gpsPos=[+lat,+lng];nativeReceived=src==='Android';$('mapStatus').textContent=(nativeReceived?'GPS Android':'Localização')+' • ~'+Math.round(acc||0)+' m';if(map){if(!userMarker){userMarker=L.circleMarker(gpsPos,{radius:8,color:'#fff',weight:3,fillColor:'#0ea58f',fillOpacity:1}).addTo(map).bindPopup('Você está aqui');map.setView(gpsPos,16);spawnDrivers()}else userMarker.setLatLng(gpsPos);if(!originPos)setOrigin(gpsPos,'Minha localização atual',true);updateDrivers()}}
+window.movaNativeLocation=(a,b,c)=>applyLocation(Number(a),Number(b),Number(c),'Android');window.movaLocationError=m=>$('mapStatus').textContent=m||'GPS indisponível';function browserGps(){setTimeout(()=>{if(nativeReceived||!navigator.geolocation)return;navigator.geolocation.watchPosition(p=>{if(!nativeReceived)applyLocation(p.coords.latitude,p.coords.longitude,p.coords.accuracy,'Web')},()=>{}, {enableHighAccuracy:true,maximumAge:5000,timeout:15000})},1800)}
+function markerIcon(txt,color){return L.divIcon({className:'',html:`<div style="width:30px;height:30px;border-radius:50%;background:${color};color:white;display:grid;place-items:center;border:2px solid white;box-shadow:0 3px 10px #0004">${txt}</div>`,iconSize:[30,30],iconAnchor:[15,15]})}
+function setOrigin(pos,label,fromGps=false){originPos=[+pos[0],+pos[1]];$('origem').value=label;if(originMarker)map.removeLayer(originMarker);originMarker=L.marker(originPos,{icon:markerIcon('A','#253a35'),draggable:true}).addTo(map);originMarker.on('dragend',e=>{let p=e.target.getLatLng();originPos=[p.lat,p.lng];$('origem').value='Origem ajustada no mapa';route()});if(destPos)route();if(!fromGps)reverse(originPos,'origem')}
+function setDest(pos,label){destPos=[+pos[0],+pos[1]];$('destino').value=label;if(destMarker)map.removeLayer(destMarker);destMarker=L.marker(destPos,{icon:markerIcon('B','#0d9a85'),draggable:true}).addTo(map);destMarker.on('dragend',e=>{let p=e.target.getLatLng();destPos=[p.lat,p.lng];$('destino').value='Destino ajustado no mapa';route()});reverse(destPos,'destino');if(originPos)route();else map.flyTo(destPos,16)}
+async function reverse(pos,id){try{let r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos[0]}&lon=${pos[1]}`,{headers:{'Accept-Language':'pt-BR'}}),d=await r.json();if(d.display_name)$(id).value=d.display_name}catch(e){}}
+async function searchAddress(q,target){let box=target==='origin'?$('originSuggestions'):$('destSuggestions');if(q.length<3){box.style.display='none';return}box.style.display='block';box.innerHTML='<div class="sug muted">Buscando…</div>';try{let bias=gpsPos?`&viewbox=${gpsPos[1]-.3},${gpsPos[0]+.3},${gpsPos[1]+.3},${gpsPos[0]-.3}&bounded=0`:'';let r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=6&countrycodes=br'+bias+'&q='+encodeURIComponent(q),{headers:{'Accept-Language':'pt-BR'}}),d=await r.json();box.innerHTML=d.length?d.map((x,i)=>`<div class="sug" data-i="${i}"><b>${(x.name||x.display_name.split(',')[0])}</b><span class="muted">${x.display_name}</span></div>`).join(''):'<div class="sug muted">Nenhum endereço encontrado</div>';box.querySelectorAll('[data-i]').forEach(el=>el.onclick=()=>{let x=d[+el.dataset.i];target==='origin'?setOrigin([x.lat,x.lon],x.display_name):setDest([x.lat,x.lon],x.display_name);box.style.display='none'})}catch(e){box.innerHTML='<div class="sug muted">Falha na busca</div>'}}
+let t1,t2;$('origem').oninput=()=>{clearTimeout(t1);t1=setTimeout(()=>searchAddress($('origem').value.trim(),'origin'),350)};$('destino').oninput=()=>{clearTimeout(t2);t2=setTimeout(()=>searchAddress($('destino').value.trim(),'dest'),350)};
+function clearDestination(){destPos=null;$('destino').value='';if(destMarker&&map)map.removeLayer(destMarker);destMarker=null;if(routeLayer&&map)map.removeLayer(routeLayer);routeLayer=null;$('routeStats').style.display='none';$('quote').style.display='none';price=market=0}$('clearDest').onclick=clearDestination;$('clearOrigin').onclick=()=>{originPos=null;$('origem').value='';if(originMarker&&map)map.removeLayer(originMarker);originMarker=null;if(routeLayer&&map)map.removeLayer(routeLayer);routeLayer=null;$('routeStats').style.display='none';$('quote').style.display='none'};$('useGpsBtn').onclick=()=>{if(gpsPos){setOrigin(gpsPos,'Minha localização atual',true);map.flyTo(gpsPos,16)}};$('locBtn').onclick=()=>gpsPos&&map.flyTo(gpsPos,16);$('pickOriginBtn').onclick=e=>{pickMode='origin';document.querySelectorAll('.qbtn').forEach(x=>x.classList.remove('on'));e.currentTarget.classList.add('on');$('mapStatus').textContent='Toque no mapa para marcar a origem'};$('pickDestBtn').onclick=e=>{pickMode='dest';document.querySelectorAll('.qbtn').forEach(x=>x.classList.remove('on'));e.currentTarget.classList.add('on');$('mapStatus').textContent='Toque no mapa para marcar o destino'};
+function spawnDrivers(){if(!map||!gpsPos)return;drivers.forEach(d=>map.removeLayer(d.m));drivers=[];let names=service==='moto'?['Rafael • CG 160','Diego • Fazer 250','Léo • Factor 150','Bruno • Bros 160']:service==='parcel'?['Marta • Entregas','Rafael • Moto Entrega','Caio • Utilitário','Léo • Express']:['Carlos • Onix','Ana • HB20','Marcos • Polo','Luana • Cronos'];names.forEach((n,i)=>{let a=Math.random()*Math.PI*2,d=.003+Math.random()*.011,p=[gpsPos[0]+Math.cos(a)*d,gpsPos[1]+Math.sin(a)*d],m=L.marker(p,{icon:markerIcon(service==='moto'?'🏍':'🚗','#243a35')}).addTo(map).bindPopup(n);drivers.push({n,m})});updateDrivers();clearInterval(driverTimer);driverTimer=setInterval(()=>{drivers.forEach(d=>{let p=d.m.getLatLng();d.m.setLatLng([p.lat+(Math.random()-.5)*.0006,p.lng+(Math.random()-.5)*.0006])});updateDrivers()},6000)}
+function hav(a,b){const R=6371,z=Math.PI/180,d1=(b[0]-a[0])*z,d2=(b[1]-a[1])*z,x=Math.sin(d1/2)**2+Math.cos(a[0]*z)*Math.cos(b[0]*z)*Math.sin(d2/2)**2;return 2*R*Math.asin(Math.sqrt(x))}function updateDrivers(){if(!gpsPos)return;let a=drivers.map(d=>({d,k:hav(gpsPos,[d.m.getLatLng().lat,d.m.getLatLng().lng])})).sort((x,y)=>x.k-y.k);$('nearCount').textContent=a.length||'--';$('nearbyList').innerHTML=a.length?a.map(x=>`<div class="driver"><div><b>${x.d.n}</b><div class="muted">${service==='parcel'?'Disponível para coleta':'Disponível agora'}</div></div><div style="text-align:right"><b>${x.k<1?Math.round(x.k*1000)+' m':x.k.toFixed(1)+' km'}</b><div class="muted">~${Math.max(2,Math.round(x.k*3+2))} min</div></div></div>`).join(''):'Nenhum prestador localizado'}
+document.querySelectorAll('.svc').forEach(b=>b.onclick=()=>{document.querySelectorAll('.svc').forEach(x=>x.classList.remove('on'));b.classList.add('on');service=b.dataset.service;$('parcelFields').style.display=service==='parcel'?'block':'none';$('quote').style.display='none';if(gpsPos)spawnDrivers();if(originPos&&destPos)route()});
+async function route(){if(!originPos||!destPos)return;try{let u=`https://router.project-osrm.org/route/v1/driving/${originPos[1]},${originPos[0]};${destPos[1]},${destPos[0]}?overview=full&geometries=geojson`,r=await fetch(u),d=await r.json();if(!d.routes?.length)throw 0;let rt=d.routes[0],km=rt.distance/1000,min=Math.ceil(rt.duration/60);if(routeLayer)map.removeLayer(routeLayer);routeLayer=L.geoJSON(rt.geometry,{style:{color:'#0d9a85',weight:5,opacity:.8}}).addTo(map);map.fitBounds(routeLayer.getBounds(),{padding:[45,45]});$('kmText').textContent=km.toFixed(1)+' km';$('minText').textContent=min+' min';$('routeStats').style.display='grid';$('calcBtn').dataset.km=km;$('calcBtn').dataset.min=min;calc(km,min)}catch(e){$('mapStatus').textContent='Não foi possível calcular a rota'}}
+function calc(km=+$('calcBtn').dataset.km,min=+$('calcBtn').dataset.min){if(!(km>0)||!(min>0)){alert('Informe origem e destino.');return}let mult=service==='moto'?.72:service==='parcel'?.86:1,base=(fare.base+km*fare.pkm+min*fare.pmin)*mult,floor=(fare.floorBase+km*fare.floorKm+min*fare.floorMin)*(service==='moto'?.67:service==='parcel'?.8:1),ref=(fare.refBase+km*fare.refKm+min*fare.refMin)*(service==='moto'?.78:service==='parcel'?.9:1),target=ref*(1-fare.discountTarget/100),minAllowed=ref*(1-fare.discountMax/100);market=Math.max(ref,0);price=Math.max(fare.minFare*(service==='moto'?.75:1),base,floor,minAllowed,target);price=Math.round(price*100)/100;let saving=Math.max(0,market-price),pct=market?saving/market*100:0;$('price').textContent=$('movaPrice').textContent=fmt(price);$('marketPrice').textContent=fmt(market);$('saving').textContent='Economia estimada: '+fmt(saving)+' • '+pct.toFixed(0)+'%';$('tripDetail').textContent=(service==='car'?'Carro':service==='moto'?'Moto':'Encomenda')+' • '+km.toFixed(1)+' km • '+min+' min';$('quote').style.display='block'}$('calcBtn').onclick=()=>calc();
+$('requestBtn').onclick=()=>{if(service==='parcel'&&!$('parcelDesc').value.trim()){alert('Descreva brevemente a encomenda.');return}tripActive=true;$('tripCard').style.display='block';$('quote').style.display='none';$('pin').textContent=String(Math.floor(1000+Math.random()*9000));$('assignedTitle').textContent=service==='moto'?'Rafael • Honda CG 160':service==='parcel'?'Marta • Mova Entregas':'Carlos • Chevrolet Onix';$('assignedSub').textContent=service==='moto'?'Moto ABC1D23':service==='parcel'?'Coleta em aproximadamente 5 min':'Placa ABC1D23';$('tripBadge').textContent=service==='parcel'?'Entregador encontrado':'Motorista encontrado';if(online){$('call').style.display='block';$('callRoute').textContent=$('origem').value+' → '+$('destino').value;$('callPrice').textContent=$('driverReceive').textContent=fmt(price)}};$('cancelTripBtn').onclick=()=>{if(confirm('Cancelar esta solicitação?')){tripActive=false;$('tripCard').style.display='none';$('call').style.display='none'}};
+$('onlineBtn').onclick=()=>{online=!online;$('onlineBadge').textContent=online?'ONLINE':'OFFLINE';$('onlineBtn').textContent=online?'Ficar offline':'Ficar online';$('onlineBtn').className=online?'btn':'btn dark'};$('declineBtn').onclick=()=>{$('call').style.display='none'};$('acceptBtn').onclick=()=>{trips++;earn+=price;localStorage.setItem('movaTrips',trips);localStorage.setItem('movaEarn',earn);$('trips').textContent=trips;$('earn').textContent=fmt(earn);$('call').style.display='none'};
+$('cargoQuoteBtn').onclick=()=>{let o=$('cargoOrigin').value.trim(),d=$('cargoDest').value.trim(),w=+$('cargoWeight').value;if(!o||!d||!w){alert('Informe origem, destino e peso aproximado.');return}$('cargoResultTitle').textContent=$('truckType').value+' • '+w.toLocaleString('pt-BR')+' kg';$('cargoResult').style.display='block'};$('cancelCargo').onclick=()=>{$('cargoResult').style.display='none'};
+['base','pkm','pmin','minFare','discountTarget','discountMax'].forEach(k=>$(k).value=fare[k]);$('saveTarifaBtn').onclick=()=>{['base','pkm','pmin','minFare','discountTarget','discountMax'].forEach(k=>fare[k]=+$(k).value);localStorage.setItem('movaFare',JSON.stringify(fare));alert('Parâmetros salvos.')};$('trips').textContent=trips;$('earn').textContent=fmt(earn);window.addEventListener('load',initMap);
+</script></body></html>
