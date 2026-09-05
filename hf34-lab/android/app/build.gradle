@@ -1,0 +1,36 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'br.com.sebvrr.kratosneo.hf34lab'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'br.com.sebvrr.kratosneo.hf34lab'
+        minSdk 29
+        targetSdk 35
+        versionCode 50234
+        versionName 'R11.H34L0'
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs = ["${rootProject.projectDir}/../web"]
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.11.0'
+}
