@@ -21,8 +21,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          SEED="$(cat hf34-lab/web/seed/part*.txt)"
+          SEED="$(for f in hf34-lab/web/seed/part*.txt; do cat "$f"; echo; done)"
           ROWS=$(printf '%s\n' "$SEED" | sed '/^[[:space:]]*$/d' | wc -l | tr -d ' ')
+          echo "Structured rows=$ROWS"
           test "$ROWS" = "322"
           printf '%s\n' "$SEED" | awk -F'|' 'NF != 12 {print "Invalid field count at seed row " NR ": " NF > "/dev/stderr"; bad=1} END {exit bad}'
           printf '%s\n' "$SEED" | awk -F'|' '{n=split($5,a,","); ev+=n} END {print "Expanded evidence=" ev; if(ev!=331) exit 1}'
