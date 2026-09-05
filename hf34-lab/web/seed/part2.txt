@@ -1,0 +1,80 @@
+c2a75694-391b-432d-95c0-a619627b5e91|46261|Patrulhamento|EQBV LTI7|212|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+6fa9cd5e-a206-4749-b42e-542159a7cbcd|46261|Patrulhamento|EQBV LTI7|211|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+a2d899a1-605f-402d-9d5f-6b519fd7e762|46261|Patrulhamento|EQBV LTI7|210|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||1|INCONFORMIDADE|Checklist NC|OK
+53ce44b9-b5b0-4842-b191-e739b97a3cbe|46261|Patrulhamento|EQBV LTI7|209|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+f6530fee-2393-4f8e-989d-646f4f1fed51|46261|Termografia|EQBV LTI7|1|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+f4120acc-e628-41e2-9061-6f2d162909b8|46261|Termografia|EQBV LTI7|9|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+d5495be8-c12e-4748-ac14-132e2f613ea9|46261|Termografia|EQBV LTI7|16|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+715fcbb6-806d-44ea-855f-accaa403054c|46261|Termografia|EQBV LTI7|23|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+f7ff8aa4-5c92-43c3-a034-0d67bd04e8d0|46261|Termografia|EQBV LTI7|39|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+a746461c-d009-4de5-b233-ede0bdfd0afc|46261|Termografia|EQBV LTI7|53|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+f8a4151f-ba72-4cbb-bb5f-32fe37b6070a|46261|Termografia|EQBV LTI7|74|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+a1abd59d-2932-4400-a2fb-3936f756e05b|46261|Termografia|EQBV LTI7|85|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+9ef56438-f5be-4631-b8c4-9b08d94d5be1|46261|Termografia|EQBV LTI7|88|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+b328bf09-f24b-48c0-abdb-7a8e3ebcfee8|46261|Termografia|EQBV LTI7|115|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+2f3c381e-a6f6-43d9-9c93-1cee85124b76|46261|Termografia|EQBV LTI7|128|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+936bcd6b-29e2-48a5-8518-12a925507417|46261|Termografia|EQBV LTI7|157|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+93bbf4e6-f0be-417c-836f-32ada8b00900|46261|Termografia|EQBV LTI7|176|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+08bf25df-e1af-4972-904a-e7e75485caee|46261|Termografia|EQBV LTI7|185|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+47e62a65-72f2-4339-acdb-f42f52a7276b|46261|Termografia|EQBV LTI7|192|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+1bcf8912-a17a-481e-b2c9-cfe1dba4527c|46261|Termografia|EQBV LTI7|197|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+bdd9c95e-9157-467e-904c-8cd9366abdd2|46261|Termografia|EQBV LTI7|213|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+0ed313f1-9726-4d6b-90d2-888259d7a5d5|46261|Termografia|EQBV LTI7|266|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+9e25574e-105b-4335-aef0-f79ecd7c145c|46261|Termografia|EQBV LTI7|279|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+a5572f4c-f0a8-4ca6-93ba-c1793e328a64|46261|Termografia|EQBV LTI7|284|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+72bc0f9b-7af2-4349-a876-f5df8821f7e0|46261|Termografia|EQBV LTI7|295|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+442ef90f-8d0d-4a36-ad15-67666894e6c8|46261|Termografia|EQBV LTI7|315|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+da96d8a3-cdad-46f2-9354-c052e5764012|46261|Termografia|EQBV LTI7|327|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+6f04cd70-9196-474e-ab09-5a2e9f100386|46261|Patrulhamento|EQBV LTI7|208|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+c83eb890-db59-40c3-8b09-70e17497e77d|46261|Termografia|EQBV LTI7|387|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+23a78e2e-378d-48b9-bb8f-60edaaaa9dbd|46261|Termografia|EQBV LTI7|445|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+93ef0851-8363-4efb-a501-671ca88a5658|46261|Termografia|EQBV LTI7|476|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+b6784def-708f-49c1-8a98-e04cc6e47c9f|46261|Termografia|EQBV LTI7|481|Sem observações|43002346565||0|OK|Conforme / sem pendência|OK
+bbb81d23-895d-40bc-bded-45585054ecb1|46261|Patrulhamento|EQBV LTI7|207|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+fcd908a8-1e52-4ba3-8ebf-c25a79bc5378|46261|Patrulhamento|EQBV LTI7|206|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+b72f3ff5-4399-401b-bf84-3351924cd734|46261|Patrulhamento|EQBV LTI7|205|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+40502390-2278-4563-bec3-d6043e5ca213|46261|Patrulhamento|EQBV LTI7|204|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+45fcdb24-d1a9-48d1-8507-31e88bd9e823|46261|Patrulhamento|EQBV LTI7|203|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565|"ÁRVORES DE MÉDIO PORTE A APROXIMADAMENTE 7 METROS DO ESTAI (A)."|0|INCONFORMIDADE|Pendência explícita|OK
+5b914ef1-34fc-49d3-99ed-368b70af1e8c|46261|Patrulhamento|EQBV LTI7|202|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+839b9434-2c65-4149-8ae9-02bdda02147e|46261|Comissionamento|EQBV LTI7|103|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+0dd7ecae-6dd5-4151-90d1-453c9844139f|46261|Termografia|EQBV LTI7|103|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+9027001e-b19d-40eb-add0-b28b4a5bd2d4|46261|Comissionamento|EQBV LTI7|104|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE"|0|INCONFORMIDADE|Pendência explícita|OK
+979c69b9-9c78-480d-b42b-defaeae6e336|46261|Termografia|EQBV LTI7|104|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+eb1e1fd9-0b1b-4a39-ad47-990a0fadb2c7|46261|Comissionamento|EQBV LTI7|119|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+73649a38-6042-42ed-9f1c-5c92396fa648|46261|Termografia|EQBV LTI7|119|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+063e2a76-d4e7-4cd8-b508-0604790ee0cf|46261|Comissionamento|EQBV LTI7|120|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+43652070-b922-4fbb-bf18-b90e14f37d17|46261|Termografia|EQBV LTI7|120|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+8e1cacc5-a217-43c3-85c9-5807c483796e|46261|Comissionamento|EQBV LTI7|121|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE COM URGÊNCIA","PRECISA FAZER LIMPEZA DE ACESSO"|0|INCONFORMIDADE|Pendência explícita|OK
+a3132c6c-86e1-4ec4-8128-3e54873f0bdf|46261|Termografia|EQBV LTI7|121|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+3224a014-e855-4de3-a2a1-49c3c983f8cf|46261|Comissionamento|EQBV LTI7|122|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DE ACESSO COM URGÊNCIA"|0|INCONFORMIDADE|Pendência explícita|OK
+f97610e4-755f-494e-9f12-df4af5e23426|46261|Termografia|EQBV LTI7|122|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+e5b766ea-4415-49f3-9340-b31a9006c63d|46261|Comissionamento|EQBV LTI7|123|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+fc3172a7-c459-454f-bf0d-bc97b6ed826d|46261|Termografia|EQBV LTI7|123|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+7ae5d3c4-ec09-42e5-8970-48ce6ab46956|46261|Comissionamento|EQBV LTI7|129,130,131|Sem observações|43002346565-43002300167|"PROPRIETÁRIO BLOQUEOU O ACESSO DAS TORRES COM CERCA"|0|IMPEDIDA / NÃO REALIZADA|Impedimento explícito|MULTITORRE — EXPANDIDO
+1a7a4126-c084-4e16-9dca-6e89c602e746|46262|Patrulhamento|EQBV LTI7|196|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+12d64095-a24b-4015-af60-739491c45f03|46262|Patrulhamento|EQBV LTI7|197|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+aaf38971-0c69-4bbf-9fe4-6dc307c9727d|46262|Patrulhamento|EQBV LTI7|198|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565|"TOCARÃO O CADEADO."|0|INCONFORMIDADE|Pendência explícita|OK
+b7922b69-a4fe-4358-9213-4fa2fd19788a|46262|Patrulhamento|EQBV LTI7|199|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+bc4cdfe2-94b6-4ffb-aa4a-e86f59aa4262|46262|Patrulhamento|EQBV LTI7|200|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+0d7feeb4-6975-4b39-861c-bdd29bf16fb5|46262|Patrulhamento|EQBV LTI7|201|A MEDIÇÃO DE ATERRAMENTO SERÁ FEITA EM OUTRA OPORTUNIDADE.|43002346565||0|OK|Conforme / sem pendência|OK
+a50f97fa-dd33-43d2-aeb4-9b02d1211c76|46262|Comissionamento|EQBV LTI7|133|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE URGENTE","TAMBÉM FORAM ELIMINADAS TREPADEIRAS DOS ESTAIS A,B,C E D"|0|INCONFORMIDADE|Pendência explícita|OK
+d9ac5ff0-a2b3-47f4-804e-a7ec5ae08e44|46262|Termografia|EQBV LTI7|133|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+3bfa4d19-eb8b-49ed-81da-dc0f4d1acd1b|46262|Comissionamento|EQBV LTI7|134|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE"|0|INCONFORMIDADE|Pendência explícita|OK
+f15f40a2-1844-4c89-9367-25602d4fa332|46262|Termografia|EQBV LTI7|134|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+b9fb1137-e64b-425d-b1b5-c5d6fceada34|46262|Comissionamento|EQBV LTI7|135|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE"|0|INCONFORMIDADE|Pendência explícita|OK
+16e91dce-c013-4dff-a2ea-c516672875a7|46262|Termografia|EQBV LTI7|135|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+a9d3803e-447d-42b8-b52e-3acd903fe476|46262|Comissionamento|EQBV LTI7|136|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+8189e2b1-1db4-4e85-bed7-7fc47aef0974|46262|Termografia|EQBV LTI7|136|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+52e9369e-c5dc-41ad-9e53-bc73790ba24a|46262|Comissionamento|EQBV LTI7|137|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+b432cbfa-547d-414a-9215-fd2db5abe3c3|46262|Termografia|EQBV LTI7|137|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+25b0fa70-3329-4e02-a956-1cbd6bb3bff1|46262|Comissionamento|EQBV LTI7|138|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+b9c862ce-702e-4a68-952d-5d9be0ff23a7|46262|Termografia|EQBV LTI7|138|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+1240d57e-1a1e-4d7c-bce8-26cefe910b34|46262|Comissionamento|EQBV LTI7|139|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE"|0|INCONFORMIDADE|Pendência explícita|OK
+ee1dd8ff-08ae-4d3d-9075-0e085322c914|46262|Termografia|EQBV LTI7|139|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+81f78579-812a-4117-bdf7-2ed8eebeab02|46262|Comissionamento|EQBV LTI7|140|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE","FALTA CONTRA PINO DO MANCAL LADO MORTO ,FASE INFERIOR V."|0|INCONFORMIDADE|Pendência explícita|OK
+3e5bc999-3ec7-4785-85fa-4f5066ce9a9e|46262|Termografia|EQBV LTI7|140|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+1d8b20e4-84b7-4537-8ce9-0fb2aeb6837b|46262|Comissionamento|EQBV LTI7|141|Sem observações|43002346565-43002300167|"PRECISA FAZER LIMPEZA DA ÁREA DA TORRE"|0|INCONFORMIDADE|Pendência explícita|OK
+e701825a-33fd-4113-a894-11325fe4d6e1|46262|Termografia|EQBV LTI7|141|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+b9b131db-fbd3-4809-b2e8-6793cff363a1|46262|Comissionamento|EQBV LTI7|142|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+e5bc752a-0f4c-44ae-a4f6-96e6dd6478c2|46262|Termografia|EQBV LTI7|142|Sem observações|43002346565-43002300167||0|OK|Conforme / sem pendência|OK
+a27902ea-fb84-44df-946c-8ff485660396|46262|Comissionamento|EQBV LTI7|137,138|Sem observações|43002346565-43002300167|"EROSÃO NO BUEIRO DE ACESSO AS TORRES 137 E 138","PRECISA FAZER RECUPERAÇÃO URGENTE,  PARA IMPEDIR O AVANÇO DA EROSÃO"|0|INCONFORMIDADE|Pendência explícita|MULTITORRE — EXPANDIDO
