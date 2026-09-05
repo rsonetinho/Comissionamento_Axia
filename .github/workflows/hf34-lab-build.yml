@@ -1,0 +1,108 @@
+name: KRATOS Neo HF34 LAB Build
+
+on:
+  push:
+    branches:
+      - kratos-hf34-lab
+    paths-ignore:
+      - 'hf34-lab/dist/**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout HF34 LAB
+        uses: actions/checkout@v4
+
+      - name: Validate HF34 seed
+        shell: bash
+        run: |
+          set -euo pipefail
+          SEED="$(cat hf34-lab/web/seed/part*.txt)"
+          ROWS=$(printf '%s\n' "$SEED" | sed '/^[[:space:]]*$/d' | wc -l | tr -d ' ')
+          test "$ROWS" = "322"
+          printf '%s\n' "$SEED" | awk -F'|' 'NF != 12 {print "Invalid field count at seed row " NR ": " NF > "/dev/stderr"; bad=1} END {exit bad}'
+          printf '%s\n' "$SEED" | awk -F'|' '{n=split($5,a,","); ev+=n} END {print "Expanded evidence=" ev; if(ev!=331) exit 1}'
+          printf '%s\n' "$SEED" | awk -F'|' '$10=="OK"{ok++} $10=="INCONFORMIDADE"{nc++} $10=="IMPEDIDA / NÃO REALIZADA"{imp++} END {print "OK="ok,"NC="nc,"IMP="imp; if(ok!=231 || nc!=83 || imp!=8) exit 1}'
+          printf '%s\n' "$SEED" | awk -F'|' '$4=="EQBV LTI7"{eq++} $4=="LEEQ LTI7"{le++} END {print "EQBV="eq,"LEEQ="le; if(eq!=261 || le!=61) exit 1}'
+          printf '%s\n' "$SEED" | grep -q 'REVISAR: torre fora da EQBV'
+          echo "HF34 seed validation: PASS"
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35 SDK
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Setup Gradle 8.7
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Build Android APK
+        run: gradle -p hf34-lab/android :app:assembleDebug --no-daemon
+
+      - name: Package PWA
+        shell: bash
+        run: |
+          rm -f KRATOS_NEO_HF34_LAB_PWA.zip
+          (cd hf34-lab/web && zip -q -r ../../KRATOS_NEO_HF34_LAB_PWA.zip .)
+          unzip -t KRATOS_NEO_HF34_LAB_PWA.zip >/dev/null
+
+      - name: Prepare distributables
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p hf34-lab/dist
+          cp hf34-lab/android/app/build/outputs/apk/debug/app-debug.apk hf34-lab/dist/KRATOS_NEO_HF34_LAB.apk
+          cp KRATOS_NEO_HF34_LAB_PWA.zip hf34-lab/dist/KRATOS_NEO_HF34_LAB_PWA.zip
+          {
+            echo "KRATOS NEO HF34 LAB — BUILD VALIDATION"
+            echo "Branch: kratos-hf34-lab"
+            echo "Package: br.com.sebvrr.kratosneo.hf34lab"
+            echo "versionCode: 50234"
+            echo "versionName: R11.H34L0"
+            echo "Structured records: 322"
+            echo "Expanded observed tower-activity evidence: 331"
+            echo "Source states: OK=231; INCONFORMIDADE=83; IMPEDIDA/NÃO REALIZADA=8"
+            echo "EQBV-LTI7 records: 261"
+            echo "LEEQ-LTI7 records: 61"
+            echo "Waimiri rule: LEEQ T377-T606, synthetic Comissionamento only when no newer observed evidence exists"
+            echo "Production backend writes: DISABLED (standalone homologation build)"
+            echo
+            sha256sum hf34-lab/dist/KRATOS_NEO_HF34_LAB.apk hf34-lab/dist/KRATOS_NEO_HF34_LAB_PWA.zip
+          } > hf34-lab/dist/VALIDACAO_HF34_LAB.txt
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: KRATOS_NEO_HF34_LAB
+          path: |
+            hf34-lab/dist/KRATOS_NEO_HF34_LAB.apk
+            hf34-lab/dist/KRATOS_NEO_HF34_LAB_PWA.zip
+            hf34-lab/dist/VALIDACAO_HF34_LAB.txt
+          if-no-files-found: error
+
+      - name: Publish distributables to branch
+        continue-on-error: true
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hf34-lab/dist
+          if ! git diff --cached --quiet; then
+            git commit -m "HF34 LAB: publish build artifacts [skip ci]"
+            git push origin HEAD:kratos-hf34-lab
+          fi
