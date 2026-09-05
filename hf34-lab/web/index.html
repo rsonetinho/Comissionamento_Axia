@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#081426">
+  <meta name="description" content="KRATOS Neo HF34 LAB — homologação da base consolidada de inspeções.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>KRATOS Neo HF34 LAB</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">K</span><div><strong>KRATOS NEO</strong><small>HF34 LAB · BASE CONSOLIDADA</small></div></div>
+    <div class="top-actions"><span id="loadState" class="state loading">Carregando base...</span><button id="installBtn" class="ghost" hidden>Instalar PWA</button></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div><p class="eyebrow">HOMOLOGAÇÃO ISOLADA</p><h1>Base consolidada HF34</h1><p>Valide linhas, torres, atividades, pendências, impedimentos e histórico antes de levar a regra para a versão operacional.</p></div>
+      <div class="hero-badges"><span>Snapshot estático</span><span>Sem escrita no backend</span><span>Waimiri T377–T606</span></div>
+    </section>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="panel controls">
+      <div class="field search"><label>Buscar</label><input id="q" type="search" placeholder="Torre, OS, pendência, observação..." autocomplete="off"></div>
+      <div class="field"><label>Linha</label><select id="lineFilter"><option value="">Todas</option><option value="EQBV LTI7">EQBV-LTI7</option><option value="LEEQ LTI7">LEEQ-LTI7</option></select></div>
+      <div class="field"><label>Status atual</label><select id="statusFilter"><option value="">Todos</option><option value="INCONFORMIDADE">Inconformidade</option><option value="IMPEDIDA / NÃO REALIZADA">Impedida / não realizada</option><option value="OK">OK</option><option value="COMISSIONADA · CONDIÇÃO NÃO CLASSIFICADA">Comissionada · condição não classificada</option><option value="REVISAR">Revisar</option></select></div>
+      <div class="field"><label>Atividade</label><select id="activityFilter"><option value="">Todas</option></select></div>
+      <button id="clearBtn" class="secondary">Limpar filtros</button>
+    </section>
+
+    <nav class="tabs" aria-label="Visões da base">
+      <button class="tab active" data-tab="towers">Torres</button>
+      <button class="tab" data-tab="records">Registros</button>
+      <button class="tab" data-tab="review">Revisões</button>
+      <button class="tab" data-tab="audit">Auditoria</button>
+    </nav>
+
+    <section id="view-towers" class="panel view active">
+      <div class="panel-head"><div><h2>Estado consolidado por torre</h2><p>Última evidência por atividade, mantendo o histórico completo.</p></div><span id="towerCount" class="counter"></span></div>
+      <div class="table-wrap"><table><thead><tr><th>Torre</th><th>Linha</th><th>Status atual</th><th>Atividades</th><th>Última evidência</th><th>Pendência / alerta</th><th></th></tr></thead><tbody id="towerBody"></tbody></table></div>
+    </section>
+
+    <section id="view-records" class="panel view">
+      <div class="panel-head"><div><h2>Registros estruturados</h2><p>Snapshot HF34 antes da expansão de registros multitorre.</p></div><span id="recordCount" class="counter"></span></div>
+      <div class="table-wrap"><table><thead><tr><th>Data</th><th>Linha</th><th>Torre(s)</th><th>Atividade</th><th>Status</th><th>OS</th><th>Pendência</th><th>Validação</th></tr></thead><tbody id="recordBody"></tbody></table></div>
+    </section>
+
+    <section id="view-review" class="panel view">
+      <div class="panel-head"><div><h2>Itens que exigem atenção</h2><p>Inconformidades, impedimentos e registros marcados para revisão.</p></div><span id="reviewCount" class="counter"></span></div>
+      <div id="reviewList" class="review-list"></div>
+    </section>
+
+    <section id="view-audit" class="panel view">
+      <div class="panel-head"><div><h2>Auditoria da consolidação</h2><p>Regras e reconciliação usadas nesta versão LAB.</p></div></div>
+      <div class="audit-grid">
+        <article><h3>Autoridade da evidência</h3><p>Registro estruturado → conteúdo/observação → checklist → pendências → validação. O diretório nunca declara uma torre como OK sozinho.</p></article>
+        <article><h3>Chave operacional</h3><p><code>Linha + Torre + Atividade + ID</code>. A mesma numeração pode existir em linhas distintas sem colisão.</p></article>
+        <article><h3>Multitorre</h3><p>Um registro com várias torres é preservado como origem e expandido em evidências individuais para a consolidação.</p></article>
+        <article><h3>Estado atual</h3><p>Para cada atividade da torre, prevalece a evidência mais recente. O histórico anterior permanece visível no prontuário.</p></article>
+        <article><h3>Reserva Waimiri Atroari</h3><p>LEEQ-LTI7 T377–T606 recebe evidência sintética de Comissionamento. Sem evidência individual, a condição técnica permanece não classificada.</p></article>
+        <article><h3>Reconciliação</h3><p id="reconciliation">Calculando...</p></article>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dossier"><div class="dialog-head"><div><p class="eyebrow">PRONTUÁRIO DA TORRE</p><h2 id="dossierTitle"></h2></div><button id="closeDossier" class="close">×</button></div><div id="dossierContent"></div></dialog>
+
+  <footer><span>KRATOS Neo HF34 LAB</span><span>Base de homologação · não altera a versão operacional</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
