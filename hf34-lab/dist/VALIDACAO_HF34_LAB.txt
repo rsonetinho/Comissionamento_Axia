@@ -1,0 +1,15 @@
+KRATOS NEO HF34 LAB — BUILD VALIDATION
+Branch: kratos-hf34-lab
+Package: br.com.sebvrr.kratosneo.hf34lab
+versionCode: 50234
+versionName: R11.H34L0
+Structured records: 322
+Expanded observed tower-activity evidence: 331
+Source states: OK=231; INCONFORMIDADE=83; IMPEDIDA/NÃO REALIZADA=8
+EQBV-LTI7 records: 261
+LEEQ-LTI7 records: 61
+Waimiri rule: LEEQ T377-T606, synthetic Comissionamento only when no newer observed evidence exists
+Production backend writes: DISABLED (standalone homologation build)
+
+41618b6a5e7d312cdd3ca60842db29a19f0a7ec361d9197352a071eebe296588  hf34-lab/dist/KRATOS_NEO_HF34_LAB.apk
+fea7f85e0a37d49c38c47d78aeac16174aa0fb7d68ee5d49a4ef85c653fe38a6  hf34-lab/dist/KRATOS_NEO_HF34_LAB_PWA.zip
